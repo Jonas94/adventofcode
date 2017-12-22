@@ -20,7 +20,6 @@ public class Dag1 {
 			{
 				value += Character.getNumericValue(captcha.charAt(i));		
 			}
-			//}
 		}
 		System.out.println("Value: " + value);
 	}
