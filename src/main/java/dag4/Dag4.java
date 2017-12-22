@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.StringTokenizer;
 
-public class Main {
+public class Dag4 {
 
 	public static void main(String[] args){
 		int i = 0;

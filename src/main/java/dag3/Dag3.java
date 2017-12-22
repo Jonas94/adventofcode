@@ -1,6 +1,6 @@
 package dag3;
 
-public class Main {
+public class Dag3 {
 
 	public static void main(String[] args) {
 		String[][] board = new String[10000][10000];
