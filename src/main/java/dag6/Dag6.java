@@ -11,6 +11,7 @@ import java.util.StringTokenizer;
 
 public class Dag6 {
 	static List<int[]> bankList = new ArrayList<int[]>();
+	static int varv = 0;
 	public static void main(String[] args) {
 
 		int i = 0;
@@ -36,7 +37,6 @@ public class Dag6 {
 			banks[i] = bank;
 			i++;
 		}
-		int varv = 0;
 		while(true){
 			varv++;
 			int highestBankPosition = findHighestBank(banks);
@@ -63,6 +63,7 @@ public class Dag6 {
 		for(int i = 0; i<bankList.size();i++){
 			int [] prevBanks = bankList.get(i);
 			if(Arrays.equals(prevBanks, banks)){
+				System.out.println((varv - i)-1);
 				printArray(banks);
 				printArray(bankList.get(i));
 				return true;
