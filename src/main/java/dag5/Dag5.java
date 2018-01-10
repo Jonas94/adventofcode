@@ -1,51 +1,40 @@
 package dag5;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.IOException;
 import java.util.LinkedList;
+import java.util.List;
+import filereader.FileHandler;
 
 public class Dag5 {
 
 	public static void main(String[] args) {
 
 		LinkedList<Integer> lista = new LinkedList<Integer>();
-		try(BufferedReader br = new BufferedReader(new FileReader("dag5.txt"))) {
-			String line = br.readLine();
-			lista.add(Integer.parseInt(line));
-			while (line != null) {
-				line = br.readLine();
-				if(line != null){
-					lista.add(Integer.parseInt(line));
-				}
+		FileHandler fh = new FileHandler();
+		List<String> lines = fh.readFile("dag5.txt");
+
+		for(String line: lines){
+			if(line != null){
+				lista.add(Integer.parseInt(line));
 			}
-			lista.add(-9999999);
-		} catch (IOException e) {
-			e.printStackTrace();
 		}
+		lista.add(-9999999);
 
 		int stepValue = 0;
 		int position = 0;
-		int nextPosition = 0;
 		int numberOfJumps = 0;
 		while(true){	
 			position += stepValue;
-
 			stepValue = lista.get(position);
-		
-			nextPosition = stepValue+position;
 
-			if(stepValue == -9999999){
+			if(stepValue ==	 -9999999){
 				break;
 			}
 			else if(lista.get(position) >= 3){
 				lista.set(position, lista.get(position)-1);
-
 			}
 			else
 			{
-					lista.set(position, lista.get(position)+1);
-
+				lista.set(position, lista.get(position)+1);
 			}
 			numberOfJumps++;
 		}

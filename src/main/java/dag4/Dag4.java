@@ -1,34 +1,18 @@
 package dag4;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.StringTokenizer;
 
+import filereader.FileHandler;
+
 public class Dag4 {
 
 	public static void main(String[] args){
-		int i = 0;
-		List<String> lines = new ArrayList<String>();
 		List<String> validPhrases = new ArrayList<String>();
 
-		try(BufferedReader br = new BufferedReader(new FileReader("dag4.txt"))) {
-			String line = br.readLine();
-			//lines[i] = line;
-			lines.add(line);
-			while (line != null) {
-				i++;
-				line = br.readLine();
-				//lines[i] = line;
-				lines.add(line);
-
-			}
-
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+		FileHandler fh = new FileHandler();
+		List<String> lines = fh.readFile("dag4.txt");
 
 		for(int x = 0; x<lines.size()-1; x++){
 			List<String> passphrase = new ArrayList<String>();

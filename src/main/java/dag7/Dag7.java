@@ -1,8 +1,5 @@
 package dag7;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -11,29 +8,24 @@ import java.util.Map;
 import java.util.Set;
 import java.util.StringTokenizer;
 
-public class Dag7 {
+import filereader.FileHandler;
 
+public class Dag7 {
+	//Denna dag är ej klar ännu.
 	public static List<String> nodesWithChilds = new ArrayList<String>();
 	public static List<String> nodesWithoutChilds = new ArrayList<String>();
 	public static List<Node> allNodes = new ArrayList<Node>();
 	public static HashMap<String, Node> map = new HashMap();
 	static int totalWeight = 0;
 	public static void main(String[] args) {
-		try(BufferedReader br = new BufferedReader(new FileReader("dag7.txt"))) {
-			String line = br.readLine();
+		FileHandler fh = new FileHandler();
+		List<String> lines = fh.readFile("dag7.txt");
+
+		for(String line : lines){
+			if(line != null){
 			Node n = createNode(line);
 			map.put(n.getName(), n);
-
-			while (line != null) {
-				line = br.readLine();
-				if(line != null){
-					n = createNode(line);
-					map.put(n.getName(), n);
-				}
-			}
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+		}}
 
 		Set set = map.entrySet();
 		Iterator iterator = set.iterator();
@@ -49,18 +41,17 @@ public class Dag7 {
 		calculateWeight(n);
 	}
 
-
 	private static int calculateWeight(Node n){
 		List<String> childNodes = new ArrayList<String>();
 		int nodeWeight = n.getWeight();
 		childNodes = n.getChilds();
-			totalWeight += nodeWeight;
+		totalWeight += nodeWeight;
 		System.out.println("NODVIKT: " + nodeWeight);
 		System.out.println("TOTALVIKT: " + totalWeight);
 		for(String s : childNodes){
 			calculateWeight(map.get(s));
 		}
-	
+
 		return totalWeight;
 	}
 
@@ -127,10 +118,4 @@ public class Dag7 {
 		int weight = Integer.parseInt(nodeSubstring);
 		return weight;
 	}
-
-
-
-
-
-
 }

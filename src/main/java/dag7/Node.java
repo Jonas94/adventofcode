@@ -9,12 +9,9 @@ public class Node {
 	private int weight;
 	private List<String> childs = new ArrayList<String>();
 	
-	
-
 	public Node() {
 	}
 
-	
 	public Node(String name, int weight) {
 		this.name = name;
 		this.weight = weight;
@@ -42,9 +39,5 @@ public class Node {
 
 	public void setChilds(List<String> childs) {
 		this.childs = childs;
-	}
-
-	
-	
-	
+	}	
 }

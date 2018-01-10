@@ -1,13 +1,11 @@
 package dag6;
 
-import java.io.BufferedReader;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.StringTokenizer;
+
+import filereader.FileHandler;
 
 public class Dag6 {
 	static List<int[]> bankList = new ArrayList<int[]>();
@@ -17,20 +15,10 @@ public class Dag6 {
 		int i = 0;
 		int[] prevBanks = new int[16];
 		int[] banks = new int[16];
-		List<String> lines = new ArrayList<String>();
 
-		try(BufferedReader br = new BufferedReader(new FileReader("dag6.txt"))) {
-			String line = br.readLine();
-			lines.add(line);
-			while (line != null) {
-				line = br.readLine();
-				lines.add(line);
-			}
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+		FileHandler fh = new FileHandler();
+		List<String> lines = fh.readFile("dag6.txt");
+
 		StringTokenizer st = new StringTokenizer(lines.get(0));
 		while (st.hasMoreTokens()) {
 			int bank = Integer.parseInt(st.nextToken());
