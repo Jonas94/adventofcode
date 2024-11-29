@@ -1,6 +1,6 @@
 package adventofcode.year2018;
 
-import adventofcode.year2018.lib.FileHandler;
+import adventofcode.utils.FileHandler;
 
 import java.util.Comparator;
 import java.util.HashMap;

@@ -1,9 +1,10 @@
 package adventofcode.year2017.dag2;
 
+import adventofcode.utils.FileHandler;
+
 import java.util.List;
 import java.util.StringTokenizer;
 
-import adventofcode.year2017.filereader.FileHandler;
 
 public class Dag2 {
 

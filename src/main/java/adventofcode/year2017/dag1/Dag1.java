@@ -1,7 +1,7 @@
 package adventofcode.year2017.dag1;
 
 import java.util.List;
-import adventofcode.year2017.filereader.FileHandler;
+import adventofcode.utils.FileHandler;
 
 public class Dag1 {
 	static int value = 0;

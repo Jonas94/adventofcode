@@ -2,7 +2,7 @@ package adventofcode.year2017.dag5;
 
 import java.util.LinkedList;
 import java.util.List;
-import adventofcode.year2017.filereader.FileHandler;
+import adventofcode.utils.FileHandler;
 
 public class Dag5 {
 

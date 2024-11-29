@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.StringTokenizer;
 
-import adventofcode.year2017.filereader.FileHandler;
+import adventofcode.utils.FileHandler;
 
 public class Dag4 {
 

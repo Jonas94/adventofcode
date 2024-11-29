@@ -1,5 +1,7 @@
 package adventofcode.year2017.dag7;
 
+import adventofcode.utils.FileHandler;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -8,7 +10,6 @@ import java.util.Map;
 import java.util.Set;
 import java.util.StringTokenizer;
 
-import adventofcode.year2017.filereader.FileHandler;
 
 public class Dag7 {
 	//Denna dag är ej klar ännu.
