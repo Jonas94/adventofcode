@@ -11,8 +11,8 @@ import java.util.concurrent.ConcurrentLinkedQueue;
 
 public class Day11 {
 
-    public final static int GRID_SIZE = 10;
-    public final static int STEPS = 100;
+    public static final int GRID_SIZE = 10;
+    public static final int STEPS = 100;
 
     public long part1(String inputFile) {
         int numberOfFlashes = 0;
@@ -33,11 +33,9 @@ public class Day11 {
             for (Point glowingPoint : currentGlowingPoints) {
                 List<Point> adjacents = findAdjacents(glowingPoint);
                 for (Point adjacent : adjacents) {
-                    if (!alreadyFlashed.contains(adjacent)) {
-                        if (increasePointByOneAndCheckIfFlashed(grid, adjacent)) {
-                            alreadyFlashed.add(adjacent);
-                            pointQueue.add(adjacent);
-                        }
+                    if (!alreadyFlashed.contains(adjacent) && increasePointByOneAndCheckIfFlashed(grid, adjacent)) {
+                        alreadyFlashed.add(adjacent);
+                        pointQueue.add(adjacent);
                     }
                 }
             }
@@ -45,12 +43,10 @@ public class Day11 {
             while (!pointQueue.isEmpty()) {
                 List<Point> adjacents = findAdjacents(pointQueue.poll());
                 for (Point adjacent : adjacents) {
-                    if (!alreadyFlashed.contains(adjacent)) {
-                        if (increasePointByOneAndCheckIfFlashed(grid, adjacent)) {
-                            alreadyFlashed.add(adjacent);
-                            pointQueue.add(adjacent);
+                    if (!alreadyFlashed.contains(adjacent) && increasePointByOneAndCheckIfFlashed(grid, adjacent)) {
+                        alreadyFlashed.add(adjacent);
+                        pointQueue.add(adjacent);
 
-                        }
                     }
                 }
             }
@@ -152,11 +148,9 @@ public class Day11 {
             for (Point glowingPoint : currentGlowingPoints) {
                 List<Point> adjacents = findAdjacents(glowingPoint);
                 for (Point adjacent : adjacents) {
-                    if (!alreadyFlashed.contains(adjacent)) {
-                        if (increasePointByOneAndCheckIfFlashed(grid, adjacent)) {
-                            alreadyFlashed.add(adjacent);
-                            pointQueue.add(adjacent);
-                        }
+                    if (!alreadyFlashed.contains(adjacent) && increasePointByOneAndCheckIfFlashed(grid, adjacent)) {
+                        alreadyFlashed.add(adjacent);
+                        pointQueue.add(adjacent);
                     }
                 }
             }
@@ -164,12 +158,9 @@ public class Day11 {
             while (!pointQueue.isEmpty()) {
                 List<Point> adjacents = findAdjacents(pointQueue.poll());
                 for (Point adjacent : adjacents) {
-                    if (!alreadyFlashed.contains(adjacent)) {
-                        if (increasePointByOneAndCheckIfFlashed(grid, adjacent)) {
-                            alreadyFlashed.add(adjacent);
-                            pointQueue.add(adjacent);
-
-                        }
+                    if (!alreadyFlashed.contains(adjacent) && increasePointByOneAndCheckIfFlashed(grid, adjacent)) {
+                        alreadyFlashed.add(adjacent);
+                        pointQueue.add(adjacent);
                     }
                 }
             }

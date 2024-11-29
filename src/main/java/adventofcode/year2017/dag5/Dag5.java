@@ -8,7 +8,7 @@ public class Dag5 {
 
 	public static void main(String[] args) {
 
-		LinkedList<Integer> lista = new LinkedList<Integer>();
+		LinkedList<Integer> lista = new LinkedList<>();
 		FileHandler fh = new FileHandler();
 		List<String> lines = fh.readFile("adventofcode.year2017.dag5.txt");
 

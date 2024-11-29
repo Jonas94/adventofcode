@@ -9,13 +9,13 @@ import adventofcode.utils.FileHandler;
 public class Dag4 {
 
 	public static void main(String[] args){
-		List<String> validPhrases = new ArrayList<String>();
+		List<String> validPhrases = new ArrayList<>();
 
 		FileHandler fh = new FileHandler();
 		List<String> lines = fh.readFile("adventofcode.year2017.dag4.txt");
 
 		for(int x = 0; x<lines.size()-1; x++){
-			List<String> passphrase = new ArrayList<String>();
+			List<String> passphrase = new ArrayList<>();
 			StringTokenizer st = new StringTokenizer(lines.get(x));
 			boolean valid = true;
 			while (st.hasMoreTokens()) {
@@ -25,7 +25,7 @@ public class Dag4 {
 				}	
 				passphrase.add(word);
 			}
-			if(valid == true){
+			if(valid){
 				validPhrases.add(lines.get(x));
 			}
 			System.out.println("Valid phrases : " + validPhrases.size());

@@ -10,7 +10,7 @@ public class Day1 {
 
 	public int solveDay1(){
 		FileHandler fileHandler = new FileHandler();
-		List<String> numberStrings = fileHandler.readFile(getClass().getClassLoader().getResource("input1.txt").getFile());
+		List<String> numberStrings = fileHandler.readFile(getClass().getClassLoader().getResource("adventofcode/year2020/input1.txt").getFile());
 		List<Integer> numbers = new ArrayList<>();
 
 

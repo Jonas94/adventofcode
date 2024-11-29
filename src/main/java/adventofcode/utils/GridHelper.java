@@ -6,18 +6,18 @@ import java.util.List;
 
 public class GridHelper {
     public static void printGrid(int[][] grid) {
-        for (int i = 0; i < grid.length; i++) {
+        for (int[] ints : grid) {
             for (int j = 0; j < grid[0].length; j++) {
-                System.out.print(grid[i][j]);
+                System.out.print(ints[j]);
             }
             System.out.println();
         }
     }
 
     public static void printStringGrid(String[][] grid) {
-        for (int i = 0; i < grid.length; i++) {
+        for (String[] strings : grid) {
             for (int j = 0; j < grid[0].length; j++) {
-                System.out.print(grid[i][j]);
+                System.out.print(strings[j]);
             }
             System.out.println();
         }
@@ -49,7 +49,7 @@ public class GridHelper {
         return grid;
     }
 
-    public static void printGridOfPoints(LinkedList<Point> points, int size) {
+    public static void printGridOfPoints(List<Point> points, int size) {
 
         int startx = -size;
         int starty = -size;

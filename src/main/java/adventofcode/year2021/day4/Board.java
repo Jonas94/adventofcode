@@ -1,7 +1,6 @@
 package adventofcode.year2021.day4;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class Board {
 
@@ -34,11 +33,11 @@ public class Board {
     }
 
     public List<Cell> getAllCellsOnGivenRow(int row) {
-        return cells.stream().filter(cell -> cell.getRow() == row).collect(Collectors.toList());
+        return cells.stream().filter(cell -> cell.getRow() == row).toList();
     }
 
     public List<Cell> getAllCellsOnGivenColumn(int column) {
-        return cells.stream().filter(cell -> cell.getColumn() == column).collect(Collectors.toList());
+        return cells.stream().filter(cell -> cell.getColumn() == column).toList();
     }
 
 }
