@@ -23,6 +23,16 @@ public class GridHelper {
         }
     }
 
+    public static void printCharGrid(char[][] grid) {
+        for (char[] strings : grid) {
+            for (int j = 0; j < grid[0].length; j++) {
+                System.out.print(strings[j]);
+            }
+            System.out.println();
+        }
+    }
+
+
 
     public static String getStringGridAsString(String[][] grid) {
         StringBuilder stringBuilder = new StringBuilder();

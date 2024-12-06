@@ -13,7 +13,7 @@ public class Day4 {
 
         char[][] grid = initGrid(lines);
 
-        List<Point> xPoints = findAllX(grid);
+        List<Point> xPoints = findChar('X', grid);
 
 
         return findWords(xPoints, grid);
@@ -25,9 +25,18 @@ public class Day4 {
 
         char[][] grid = initGrid(lines);
 
-        
+        List<Point> startingPoints = findChar('A', grid);
 
-        return 0;
+        int count = 0;
+        for (Point p : startingPoints) {
+            if (hasMasDiagonallyLeft(grid, p) && hasMasDiagonallyRight(grid, p)) {
+                count++;
+            }
+
+        }
+
+
+        return count;
     }
 
 
@@ -42,12 +51,12 @@ public class Day4 {
         return grid;
     }
 
-    public List<Point> findAllX(char[][] grid) {
+    public List<Point> findChar(char ch, char[][] grid) {
         List<Point> points = new ArrayList<>();
 
         for (int i = 0; i < grid.length; i++) {
             for (int j = 0; j < grid[0].length; j++) {
-                if (grid[i][j] == 'X') {
+                if (grid[i][j] == ch) {
                     points.add(new Point(i, j));
                 }
 
@@ -157,4 +166,20 @@ public class Day4 {
         return grid[xPoint.x + 1][xPoint.y + 1] == 'M' && grid[xPoint.x + 2][xPoint.y + 2] == 'A' && grid[xPoint.x + 3][xPoint.y + 3] == 'S';
     }
 
+
+    public boolean hasMasDiagonallyRight(char[][] grid, Point aPoint) {
+        if (aPoint.y >= grid[0].length - 1 || aPoint.x < 1 || aPoint.y < 1 || aPoint.x >= grid.length - 1) {
+            return false;
+        }
+
+        return (grid[aPoint.x + 1][aPoint.y - 1] == 'M' && grid[aPoint.x - 1][aPoint.y + 1] == 'S') || (grid[aPoint.x + 1][aPoint.y - 1] == 'S' && grid[aPoint.x - 1][aPoint.y + 1] == 'M');
+    }
+
+    public boolean hasMasDiagonallyLeft(char[][] grid, Point aPoint) {
+        if (aPoint.y >= grid[0].length - 1 || aPoint.x < 1 || aPoint.y < 1 || aPoint.x >= grid.length - 1) {
+            return false;
+        }
+
+        return (grid[aPoint.x - 1][aPoint.y - 1] == 'M' && grid[aPoint.x + 1][aPoint.y + 1] == 'S') || (grid[aPoint.x - 1][aPoint.y - 1] == 'S' && grid[aPoint.x + 1][aPoint.y + 1] == 'M');
+    }
 }
