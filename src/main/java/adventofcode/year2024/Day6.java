@@ -131,7 +131,7 @@ public class Day6 {
 
 
         for (int i = 0; i < grid.length; i++) {
-            for (int j = 0; j < grid.length; j++) {
+            for (int j = 0; j < grid[0].length; j++) {
                 if (grid[i][j] == '#' || grid[i][j] == '^') {
                     continue;
                 }
@@ -140,12 +140,7 @@ public class Day6 {
                 if (stuckInInfiniteLoop(grid)) {
                     infiniteLoopCount++;
                 }
-                //Run simulation
 
-                //if stuck in loop, break out and continue
-
-                //reset grid
-//                grid = GridHelper.initCharGrid(lines);
                 grid[i][j] = '.';
 
             }

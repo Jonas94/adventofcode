@@ -17,16 +17,14 @@ class Day6Test {
 
         assertEquals(41, day.part1("adventofcode/year2024/testinput6.txt"));
         assertEquals(4778, day.part1("adventofcode/year2024/input6.txt"));
-        //4777 too low
-
     }
 
     @Test
     void part2() {
         Day6 day = new Day6();
 
-      //  assertEquals(6, day.part2("adventofcode/year2024/testinput6.txt"));
-        assertEquals(0, day.part2("adventofcode/year2024/input6.txt"));
+        assertEquals(6, day.part2("adventofcode/year2024/testinput6.txt"));
+        assertEquals(1618, day.part2("adventofcode/year2024/input6.txt"));
 
     }
 
