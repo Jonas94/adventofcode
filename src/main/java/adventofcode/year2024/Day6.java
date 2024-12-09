@@ -162,7 +162,7 @@ public class Day6 {
 
         Direction direction = getNextDirection(directionQueue);
 
-        List<Pair<Point, Direction>> visited = new ArrayList<>();
+        Set<Pair<Point, Direction>> visited = new HashSet<>();
 
         visited.add(Pair.of(point, direction));
 
