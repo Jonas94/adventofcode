@@ -2,9 +2,7 @@ package adventofcode.year2024;
 
 import adventofcode.utils.FileHandler;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class Day9 {
 
@@ -80,6 +78,7 @@ public class Day9 {
         return -1;
     }
 
+
     private boolean hasGap(Map<Integer, Integer> map) {
         return highestIndexOfData(map) > lowestIndexOfGap(map);
     }
@@ -92,7 +91,7 @@ public class Day9 {
                 continue;
             }
 
-            total = total + i * map.get(i);
+            total = total + (long) i * map.get(i);
         }
         return total;
     }
@@ -102,7 +101,7 @@ public class Day9 {
         for (Integer integer : map.values()) {
             System.out.print(integer == null ? "." : integer);
         }
-
+        System.out.println();
     }
 
 
@@ -111,19 +110,80 @@ public class Day9 {
         String line = lines.getFirst();
         Map<Integer, Integer> map = initMap(line);
 
+        Set<Integer> fileIdsHandled = new HashSet<>();
 
-        while (hasGap(map)) { //TODO: replace with something else
+        //     printMap(map);
 
-            int dataIndex = highestIndexOfData(map);
-            Integer data = map.get(dataIndex);
+        for (int i = map.keySet().size() - 1; i > 0; i--) {
 
-            int freeSpaceIndex = lowestIndexOfGap(map);
+            if (map.get(i) == null) {
+                continue;
+            }
 
-            map.put(freeSpaceIndex, data);
-            map.remove(dataIndex);
+            int currentNumber = map.get(i);
+
+            List<Integer> wordIndexes = new ArrayList<>();
+            wordIndexes.add(i);
+            for (int j = i - 1; j > 0; j--) {
+                if (map.get(j) == null) {
+                    continue;
+                }
+                if (map.get(j) == currentNumber) {
+                    wordIndexes.add(j);
+                } else {
+                    break;
+                }
+            }
+
+            int startIndexOfFreeSpace = findStartIndexOfFreeSpace(wordIndexes.size(), map);
+
+            if (fileIdsHandled.contains(currentNumber)) {
+                continue;
+            }
+
+            fileIdsHandled.add(currentNumber);
+
+            if (startIndexOfFreeSpace == -1 || startIndexOfFreeSpace > wordIndexes.get(wordIndexes.size() - 1)) {
+                i = i - (wordIndexes.size() - 1);
+                continue;
+            }
+
+            int y = 0;
+            for (int j = 0; j < wordIndexes.size(); j++) {
+                map.put(startIndexOfFreeSpace + y, map.get(wordIndexes.get(j)));
+                map.put(wordIndexes.get(j), null);
+                y++;
+            }
+
+//            printMap(map);
+
         }
 
+        //     System.out.println();
+        //printMap(map);
         return calcChecksum(map);
+    }
+
+
+    public int findStartIndexOfFreeSpace(int size, Map<Integer, Integer> map) {
+
+
+        for (int i = lowestIndexOfGap(map); i < map.keySet().size(); i++) {
+
+            boolean found = true;
+            for (int j = 0; j < size; j++) {
+                if (map.get(j + i) != null) {
+                    found = false;
+                    break;
+                }
+            }
+
+            if (found) {
+                return i;
+
+            }
+        }
+        return -1;
     }
 
 }
