@@ -37,7 +37,6 @@ public class Day5 {
                 }
             }
             if (!failed) {
-                System.out.println(Arrays.stream(updateNumbers).toList());
                 middleNumbers.add(findMiddleNumber(updateNumbers));
             }
         }
@@ -56,16 +55,12 @@ public class Day5 {
     }
 
     private boolean isAlrightToExecute(String update, Map<String, List<String>> restrictions, List<String> updatedNumbers, List<String> updateInFull, List<String> temporaryNumbersRun) {
-
         if (!restrictions.containsKey(update)) {
             return true;
         }
-        List<String> requiredUpdates = restrictions.get(update).stream().filter(number -> updateInFull.contains(number)).filter(number -> !temporaryNumbersRun.contains(number)).collect(Collectors.toList());
+        List<String> requiredUpdates = restrictions.get(update).stream().filter(updateInFull::contains).filter(number -> !temporaryNumbersRun.contains(number)).toList();
 
-        if (updatedNumbers.containsAll(requiredUpdates)) {
-            return true;
-        }
-        return false;
+        return updatedNumbers.containsAll(requiredUpdates);
     }
 
     private Map<String, List<String>> mapRestrictions(List<String> pageOrderingRules) {
@@ -102,6 +97,23 @@ public class Day5 {
         return -1;
     }
 
+    private boolean passesCheck(List<String> update, Map<String, List<String>> restrictions) {
+        boolean failed = false;
+        List<String> updatedNumbers = new ArrayList<>();
+
+
+        List<String> temporaryNumbersRun = new ArrayList<>();
+        for (String number : update) {
+            if (isAlrightToExecute(number, restrictions, updatedNumbers, update, temporaryNumbersRun)) {
+                updatedNumbers.add(number);
+            } else {
+                failed = true;
+                break;
+            }
+        }
+        return !failed;
+    }
+
     public long part2(String inputFile) {
         List<String> lines = FileHandler.readFileIntoList(inputFile);
         int emptyLineIndex = findIndexOfEmptyLine(lines);
@@ -122,6 +134,8 @@ public class Day5 {
             String[] updateNumbers = update.split(",");
 
             List<String> temporaryNumbersRun = new ArrayList<>();
+
+
             for (String number : updateNumbers) {
                 if (isAlrightToExecute(number, restrictions, updatedNumbers, Arrays.stream(updateNumbers).toList(), temporaryNumbersRun)) {
                     updatedNumbers.add(number);
@@ -139,18 +153,31 @@ public class Day5 {
         }
 
 
-        //System.out.println(failedUpdates);
+        System.out.println("SIZE OF FAILED: " + failedUpdates.size());
 
-        int count = 0;
+        List<List<String>> fixedUpdates = new ArrayList<>();
         for (String update : failedUpdates) {
 
-            count = count + sortFailedToCorrect(update, restrictions);
-          //  System.out.println(count);
+            fixedUpdates.add(sortFailedUpdate(update, restrictions));
         }
-        return count;
+
+        int counterFailed = 0;
+        for (List<String> update : fixedUpdates) {
+            boolean passes = passesCheck(update, restrictions);
+            if (!passes) {
+
+                System.out.println("FAILED TO PASS: " + update);
+                counterFailed++;
+            } else {
+                middleNumbers.add(findMiddleNumber(update));
+            }
+        }
+        System.out.println("SIZE OF FAILED: " + counterFailed);
+
+        return middleNumbers.stream().mapToInt(Integer::parseInt).sum();
     }
 
-    public int sortFailedToCorrect(String update, Map<String, List<String>> pageOrderingRules) {
+    public List<String> sortFailedUpdate(String update, Map<String, List<String>> pageOrderingRules) {
 
         List<String> updateNumbers = Arrays.stream(update.split(",")).collect(Collectors.toList());
 
@@ -158,46 +185,29 @@ public class Day5 {
         filteredRestrictions.keySet().retainAll(updateNumbers);
 
         for (Map.Entry<String, List<String>> entry : filteredRestrictions.entrySet()) {
-            entry.setValue(entry.getValue().stream().filter(updateNumbers::contains).collect(Collectors.toList()));
+            entry.setValue(entry.getValue().stream().filter(updateNumbers::contains).toList());
         }
 
-        for (int i = 0; i < updateNumbers.size(); i++) {
-
-
-            String current = updateNumbers.get(i);
-            if (!filteredRestrictions.containsKey(current)) {
-                continue;
+        Comparator<String> customComparator = (s1, s2) -> {
+            if (s1.equals(s2)) {
+                //Should never happen in this case
+                return 0;
             }
 
-            List<String> blockers = filteredRestrictions.get(current);
-
-            int highestBlockerValue = -1;
-            for (String blocker : blockers) {
-
-                if (updateNumbers.indexOf(blocker) > highestBlockerValue) {
-                    highestBlockerValue = updateNumbers.indexOf(blocker);
-                }
-
-            }
-            if (highestBlockerValue > -1) {
-
-                if (highestBlockerValue > i) {
-
-                    String temp = updateNumbers.get(highestBlockerValue);
-                    updateNumbers.set(highestBlockerValue, current);
-
-                    updateNumbers.remove(i);
-                    updateNumbers.add(highestBlockerValue - 1, temp);
+            if (pageOrderingRules.containsKey(s1)) {
+                if (pageOrderingRules.get(s1).contains(s2)) {
+                    return 1;
+                } else {
+                    return -1;
                 }
             }
+            return -1;
+        };
 
-        }
+        updateNumbers.sort(customComparator);
 
 
-        System.out.println(updateNumbers);
-
-
-        return Integer.parseInt(findMiddleNumber(updateNumbers));
+        return updateNumbers;
     }
 
 
