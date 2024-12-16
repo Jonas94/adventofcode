@@ -5,7 +5,6 @@ import adventofcode.utils.FileHandler;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Objects;
 
 public class Day2 {
 
@@ -20,10 +19,9 @@ public class Day2 {
         int countOfValidReports = 0;
         for (List<Integer> report : reports) {
 
-            if (isReportSafe(report, false)) {
+            if (isReportSafe(report)) {
                 countOfValidReports++;
             }
-
         }
 
         return countOfValidReports;
@@ -41,66 +39,63 @@ public class Day2 {
         int countOfValidReports = 0;
         for (List<Integer> report : reports) {
 
-            if (isReportSafe(report, true)) {
+            if (isReportSafe(report)) {
                 countOfValidReports++;
+                continue;
             }
+            for (int i = 0; i < report.size(); i++) {
+                List<Integer> trimmedReport = new ArrayList<>(report);
+                trimmedReport.remove(i);
+
+                if (isReportSafe(trimmedReport)) {
+                    countOfValidReports++;
+                    break;
+                }
+            }
+
         }
         return countOfValidReports;
     }
 
-    public boolean isReportSafe(List<Integer> report, boolean problemDampener) {
-        int countOfProblems = 0;
-        if (!problemDampener && Objects.equals(report.get(0), report.get(1))) {
-            return false;
-        } else if (report.get(0).compareTo(report.get(1)) > 0) {
+    public boolean isReportSafe(List<Integer> report) {
+        if (isIncreasing(report)) {
             for (int i = 0; i < report.size() - 1; i++) {
-                if (report.get(i) <= report.get(i + 1) || Math.abs(report.get(i) - report.get(i + 1)) > 3) {
-                    if (problemDampener && countOfProblems == 0) {
-                        countOfProblems++;
-                        if (i == 0) {
-                            continue;
-                        }
-
-                        if (countOfProblems == 1 && i == report.size() - 2) {
-                            continue;
-                        }
-                        if (report.get(i - 1) <= report.get(i + 1) || Math.abs(report.get(i - 1) - report.get(i + 1)) > 3) {
-                            return false;
-
-                        } else {
-                            continue;
-                        }
-
-                    }
+                if (currentEqualOrLargerThanNext(report.get(i), report.get(i + 1)) || diffLargerThan3(report.get(i), report.get(i + 1))) {
                     return false;
                 }
             }
-            return true;
+
         } else {
             for (int i = 0; i < report.size() - 1; i++) {
-                if (report.get(i) >= report.get(i + 1) || Math.abs(report.get(i) - report.get(i + 1)) > 3) {
-                    if (problemDampener && countOfProblems == 0) {
-                        if (i == 0) {
-                            countOfProblems++;
-                            continue;
-                        }
-                        countOfProblems++;
-                        if (countOfProblems == 1 && i == report.size() - 2) {
-                            continue;
-                        }
-                        if (report.get(i - 1) <= report.get(i + 1) && Math.abs(report.get(i - 1) - report.get(i + 1)) <= 3) {
-                            continue;
-
-                        } else {
-                            return false;
-                        }
-                    }
+                if (currentEqualOrLessThanNext(report.get(i), report.get(i + 1)) || diffLargerThan3(report.get(i), report.get(i + 1))) {
                     return false;
                 }
-
             }
-            return true;
         }
 
+        return true;
+    }
+
+    private boolean currentEqualOrLargerThanNext(int current, int next) {
+        return current >= next;
+    }
+
+    private boolean currentEqualOrLessThanNext(int current, int next) {
+        return current <= next;
+    }
+
+    private boolean diffLargerThan3(int current, int next) {
+        return Math.abs(current - next) > 3;
+    }
+
+    private boolean isIncreasing(List<Integer> report) {
+        int countIncreased = 0;
+
+        for (int i = 0; i < report.size() - 1; i++) {
+            if (report.get(i + 1) > report.get(i)) {
+                countIncreased++;
+            }
+        }
+        return countIncreased > report.size() / 2;
     }
 }
