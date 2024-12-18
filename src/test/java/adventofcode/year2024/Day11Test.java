@@ -16,9 +16,7 @@ class Day11Test {
     @Test
     void part2() {
         Day11 day = new Day11();
-
-       //  assertEquals(0, day.part2("adventofcode/year2024/testinput11.txt"));
-        assertEquals(0, day.part2("adventofcode/year2024/input11.txt"));
+        assertEquals(223767210249237L, day.part2("adventofcode/year2024/input11.txt"));
 
     }
 }
